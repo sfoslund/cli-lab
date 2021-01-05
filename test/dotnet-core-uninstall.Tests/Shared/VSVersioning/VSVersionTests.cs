@@ -47,9 +47,9 @@ namespace Microsoft.DotNet.Tools.Uninstall.Tests.Shared.VSVersioning
         [InlineData(new string[] { "1.0.0" }, new bool[] { false }, new string[] { "1.0.0" }, new bool[] { false })]
         [InlineData(new string[] { "1.0.0", "1.0.1" }, new bool[] { true, false }, new string[] { "1.0.0", "1.0.1" }, new bool[] { true, false })]
         [InlineData(new string[] { "2.1.0", "1.0.1" }, new bool[] { false, true }, new string[] { "1.0.0", "1.1.0" }, new bool[] { false, false })]
-        [InlineData(new string[] { "3.0.0", "5.0.0" }, new bool[] { false, false }, new string[] { "1.0.0", "1.1.0", "1.0.1", "1.0.2", "1.1.3" }, new bool[] { true, true, true, false, false })]
-        [InlineData(new string[] { "3.0.0", "5.0.0" }, new bool[] { false, false }, new string[] { "1.0.0", "1.1.0", "1.0.1", "5.0.0" }, new bool[] { true, false, false, false })]
-        [InlineData(new string[] { "5.0.0", "5.0.1", "10.100.100" }, new bool[] { false, false, false }, new string[] { "5.0.0", "10.0.0" }, new bool[] { false, false })]
+        [InlineData(new string[] { "3.0.0", "6.0.0" }, new bool[] { false, false }, new string[] { "1.0.0", "1.1.0", "1.0.1", "1.0.2", "1.1.3" }, new bool[] { true, true, true, false, false })]
+        [InlineData(new string[] { "3.0.0", "5.0.0" }, new bool[] { true, false }, new string[] { "1.0.0", "1.1.0", "1.0.1", "5.0.0" }, new bool[] { true, false, false, false })]
+        [InlineData(new string[] { "5.0.0", "5.0.1", "10.100.100" }, new bool[] { true, false, false }, new string[] { "5.0.0", "10.0.0" }, new bool[] { false, false })]
         internal void TestGetUninstallableMac(string[] sdkVersions, bool[] sdkAllowed, string[] runtimeVersions,  bool[] runtimeAllowed)
         {
             var bundles = new List<Bundle>();
@@ -90,9 +90,9 @@ namespace Microsoft.DotNet.Tools.Uninstall.Tests.Shared.VSVersioning
         [InlineData(new string[] { "1.0.0" }, new bool[] { false }, new string[] { "1.0.0" }, new bool[] { false })]
         [InlineData(new string[] { "1.0.0", "1.0.1" }, new bool[] { true, false }, new string[] { "1.0.0", "1.0.1" }, new bool[] { true, false })]
         [InlineData(new string[] { "2.1.0", "1.0.1" }, new bool[] { false, true }, new string[] { "2.0.0", "1.1.0" }, new bool[] { false, false })]
-        [InlineData(new string[] { "3.0.0", "5.0.0" }, new bool[] { false, false }, new string[] { "1.0.0", "1.1.0", "1.0.1", "1.0.2", "1.1.3" }, new bool[] { true, true, true, false, false })]
-        [InlineData(new string[] { "3.0.0", "5.0.0" }, new bool[] { false, false }, new string[] { "1.0.0", "1.1.0", "1.0.1", "5.0.0" }, new bool[] { true, false, false, false })]
-        [InlineData(new string[] { "5.0.0", "5.0.1", "10.100.100" }, new bool[] { false, false, false }, new string[] { "5.0.0", "10.0.0" }, new bool[] { false, false })]
+        [InlineData(new string[] { "3.0.0", "5.0.0" }, new bool[] { true, false }, new string[] { "1.0.0", "1.1.0", "1.0.1", "1.0.2", "1.1.3" }, new bool[] { true, true, true, false, false })]
+        [InlineData(new string[] { "3.0.0", "5.0.0" }, new bool[] { true, false }, new string[] { "1.0.0", "1.1.0", "1.0.1", "5.0.0" }, new bool[] { true, false, false, false })]
+        [InlineData(new string[] { "5.0.0", "5.0.1", "10.100.100" }, new bool[] { true, false, false }, new string[] { "5.0.0", "10.0.0" }, new bool[] { false, false })]
         internal void TestGetUninstallableNonSdkVersionsMac(string[] sdkVersions, bool[] sdkAllowed, string[] runtimeVersions, bool[] runtimeAllowed)
         {
             var bundles = new List<Bundle>();
@@ -192,9 +192,9 @@ namespace Microsoft.DotNet.Tools.Uninstall.Tests.Shared.VSVersioning
         [InlineData(new string[] { "1.0.0" }, new string[] { "SDK" }, new string[] { "1.0.0" }, new string[] { "Runtime" })]
         [InlineData(new string[] { "1.0.0", "1.0.1" }, new string[] { "None", "SDK" }, new string[] { "1.0.0", "1.0.1" }, new string[] { "None", "Runtime" })]
         [InlineData(new string[] { "2.1.0", "1.0.1" }, new string[] { "SDK", "None" }, new string[] { "2.0.0", "1.1.0" }, new string[] { "Runtime", "Runtime" })]
-        [InlineData(new string[] { "3.0.0", "5.0.0" }, new string[] { "SDK", "5.0.0" }, new string[] { "1.0.0", "1.1.0", "1.0.1", "1.0.2", "1.1.3" }, new string[] { "None", "None", "None", "Runtime", "Runtime" })]
-        [InlineData(new string[] { "3.0.0", "5.0.0" }, new string[] { "SDK", "5.0.0" }, new string[] { "1.0.0", "1.1.0", "1.0.1", "5.0.0" }, new string[] { "None", "Runtime", "Runtime", "5.0.0" })]
-        [InlineData(new string[] { "5.0.0", "5.0.1", "10.100.100" }, new string[] { "5.0.0", "5.0.0", "5.0.0" }, new string[] { "5.0.0", "10.0.0" }, new string[] { "5.0.0", "5.0.0" })]
+        [InlineData(new string[] { "3.0.0", "5.0.0" }, new string[] { "None", "SDK" }, new string[] { "1.0.0", "1.1.0", "1.0.1", "1.0.2", "1.1.3" }, new string[] { "None", "None", "None", "Runtime", "Runtime" })]
+        [InlineData(new string[] { "3.0.0", "5.0.0" }, new string[] { "None", "SDK" }, new string[] { "1.0.0", "1.1.0", "1.0.1", "6.0.0" }, new string[] { "None", "Runtime", "Runtime", "6.0.0" })]
+        [InlineData(new string[] { "5.0.0", "5.0.1", "10.100.100" }, new string[] { "None", "SDK", "6.0.0" }, new string[] { "5.0.0", "10.0.0" }, new string[] { "None", "6.0.0" })]
         internal void TestGetListCommandUninstallableStringsMac(string[] sdkVersions, string[] sdkExpected, string[] runtimeVersions, string[] runtimeExpected)
         {
             var bundles = new List<Bundle>();
