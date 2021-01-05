@@ -17,7 +17,7 @@ namespace Microsoft.DotNet.Tools.Uninstall.Tests.Shared.Commands
 {
     public class CommandBundleFilterTests
     {
-        private static readonly string[] versions = { "1.0.0", "1.0.1", "1.1.0", "2.1.0", "2.1.500", "2.1.600", "2.2.100", "2.2.200", "5.0.0", "5.0.1", "10.10.10" };
+        private static readonly string[] versions = { "1.0.0", "1.0.1", "1.1.0", "2.1.0", "2.1.500", "2.1.600", "2.2.100", "2.2.200", "5.0.0", "7.0.1", "10.10.10" };
         private Dictionary<string, BundleArch> versionsWithArch = new Dictionary<string, BundleArch>
         {
             { "3.0.0", BundleArch.X64 },
@@ -120,10 +120,10 @@ namespace Microsoft.DotNet.Tools.Uninstall.Tests.Shared.Commands
         }
 
         [Theory]
-        [InlineData("remove {0} 5.0.0")]
+        [InlineData("remove {0} 7.0.1")]
         [InlineData("remove {0} 10.10.10")]
         [InlineData("remove {0} --all --force")]
-        [InlineData("remove {0} 1.0.0 1.0.1 1.1.0 2.1.0 2.1.500 2.1.600 2.2.100 2.2.200 5.0.0 5.0.1 10.10.10")]
+        [InlineData("remove {0} 1.0.0 1.0.1 1.1.0 2.1.0 2.1.500 2.1.600 2.2.100 2.2.200 5.0.0 7.0.1 10.10.10")]
         internal void TestUpperLimitAlwaysRequired(string command)
         {
             var sdkBundles = new List<Bundle<SdkVersion>>();

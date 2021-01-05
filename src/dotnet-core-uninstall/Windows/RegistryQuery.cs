@@ -99,13 +99,16 @@ namespace Microsoft.DotNet.Tools.Uninstall.Windows
 
         private static void ParseVersionAndArch(RegistryKey registryKey, string displayName, string bundleCachePath, out BundleVersion version, out BundleArch arch)
         {
+            const string x64String = "x64";
+            const string x86String = "x86";
+
             var match = Regexes.BundleDisplayNameRegex.Match(displayName);
             var cachePathMatch = Regexes.BundleCachePathRegex.Match(bundleCachePath);
-            var archString = cachePathMatch.Groups[Regexes.ArchGroupName].Value ?? string.Empty;
+            var archString = displayName.Contains(x64String) ? x64String : displayName.Contains(x86String) ? x86String : string.Empty;
             var versionFromCachePath = cachePathMatch.Groups[Regexes.VersionGroupName].Value;
-            // Note: ASP.NET Core runtimes do not include version in the cache path, need to get version from registry:
-            var versionFromRegistry = string.Join('.', (registryKey.GetValue("DisplayVersion") as string).Split('.').Take(3));
-            var versionString = string.IsNullOrEmpty(versionFromCachePath) ? versionFromRegistry : versionFromCachePath;
+            // Note: ASP.NET Core runtimes do not include version in the cache path, need to get version from the display name
+            var versionFromDisplayName = Regexes.VersionDisplayNameRegex.Match(displayName)?.Value ?? string.Empty;
+            var versionString = string.IsNullOrEmpty(versionFromCachePath) ? versionFromDisplayName : versionFromCachePath;
             var hasAuxVersion = cachePathMatch.Groups[Regexes.AuxVersionGroupName].Success;
             var footnote = hasAuxVersion ?
                 string.Format(LocalizableStrings.HostingBundleFootnoteFormat, displayName, versionString) :
@@ -129,8 +132,8 @@ namespace Microsoft.DotNet.Tools.Uninstall.Windows
 
             switch (archString)
             {
-                case "x64": arch = BundleArch.X64; break;
-                case "x86": arch = BundleArch.X86; break;
+                case x64String: arch = BundleArch.X64; break;
+                case x86String: arch = BundleArch.X86; break;
                 case "": arch = BundleArch.X64 | BundleArch.X86; break;
                 default: throw new ArgumentException();
             }
